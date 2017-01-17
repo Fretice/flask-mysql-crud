@@ -16,10 +16,10 @@ class Config:
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URI') or 'mysql://scott:root@localhost/mydatabase'
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URI') or 'mysql://root@localhost/MySql_CRUD'
 
 
 config = {
     'development': DevelopmentConfig,
-    'dfault': DevelopmentConfig
+    'default': DevelopmentConfig
 }
