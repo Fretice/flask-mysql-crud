@@ -1,0 +1,21 @@
+<tbody>
+    {% for person in persons %}
+    <tr>
+        <td><input type="checkbox" name="" ></td>
+        <td>{{ person.name }}</td>
+        {% if person.gender==1 %}
+        <td>男</td>
+        {% else %}
+        <td>女</td>
+        {% endif %}
+        <td>{{ person.age }}</td>
+        <td>{{ person.birthday }}</td>
+        <td>{{ person.location }}</td>
+        <td>{{ person.comment }}</td>
+        <td>
+        <button type="button" class="btn btn-primary btn-sm" onclick="alert({{ person.p_id }})">修改</button>
+        <button type="button" class="btn btn-danger btn-sm" onclick="alert({{ person.p_id }})">删除</button>
+        </td>
+    </tr>
+    {% endfor %}
+</tbody>
