@@ -13,7 +13,8 @@
         <td>{{ person.location }}</td>
         <td>{{ person.comment }}</td>
         <td>
-        <button type="button" class="btn btn-primary btn-sm" onclick="alert({{ person.p_id }})">修改</button>
+        {# <button type="button" class="btn btn-primary btn-sm" onclick="alert({{ person.p_id }})">修改</button> #}
+        <a href="{{ url_for('.person_update', id=person.p_id) }}" class="btn btn-primary btn-sm">修改</a>
         <button type="button" class="btn btn-danger btn-sm" onclick="alert({{ person.p_id }})">删除</button>
         </td>
     </tr>
