@@ -1,5 +1,4 @@
-import datetime
-from flask import render_template, request, current_app, redirect, flash, url_for
+from flask import render_template, request, current_app, redirect, flash, url_for, jsonify
 from . import main
 from .. import db
 from .forms import PersonUpdateForm
@@ -30,9 +29,40 @@ def person_update(id):
         flash('资料已更新')
         return redirect(url_for('.index'))
     form.name.data = person.name
-    form.gender.data = person.gender
+    form.gender.data = str(person.gender)
     form.birthday.data = person.birthday
     form.age.data = person.age
     form.location.data = person.location
     form.comment.data = person.comment
     return render_template('edit_person.html', form=form)
+
+
+@main.route('/delete_person', methods=['POST'])
+def delete_person():
+    p_id = request.form['ID']
+    person = Person.query.get_or_404(p_id)
+    if person is not None:
+        db.session.delete(person)
+        db.session.commit()
+        return_str = '删除成功'
+    else:
+        return_str = '删除似乎出现了点问题'
+    return jsonify(returnStr=return_str)
+
+
+@main.route('/add_person', methods=['GET', 'POST'])
+def add_person():
+    form = PersonUpdateForm()
+    if form.validate_on_submit():
+        person = Person()
+        person.name = form.name.data
+        person.gender = int(form.gender.data)
+        person.birthday = form.birthday.data
+        person.age = int(form.age.data)
+        person.location = form.location.data
+        person.comment = form.comment.data
+        db.session.add(person)
+        db.session.commit()
+        flash('添加人员成功')
+        return redirect(url_for('.index'))
+    return render_template('add_person.html', form=form)

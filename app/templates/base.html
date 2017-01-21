@@ -33,8 +33,56 @@
 
         {% block page_content %}{% endblock %}
     </div>
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <input type="hidden" name="hidPId" id="hidPId">
+        <h4 class="modal-title">确定删除</h4>
+      </div>
+      <div class="modal-body">
+        <p>是否删除此用户,此行为不可恢复哦 /(ㄒoㄒ)/~~</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-danger" onclick="DeletePerson($('#hidPId').val())">删除</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
+
 {% endblock %}
 {% block scripts %}
 {{ super() }}
 <script type="text/javascript" src="http://cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<script type="text/javascript">
+    function ShowModal(id){
+        $('#myModal').modal('show')
+        $('#myModal').find("#hidPId").val(id)
+        
+    }
+    function DeletePerson(id){
+
+        url = $SCRIPT_ROOT = {{ request.script_root|tojson|safe }}+'/delete_person';
+        $.ajax({
+            url:url,
+            data:{ID:id},
+            dataType:'json',
+            type:'POST',
+            success:function(data){
+alert(data.returnStr)
+if(data.returnStr.indexOf('成功')!=-1)
+{
+    window.location.reload()
+}
+            },
+            error:function(data){
+alert('~~~~(>_<)~~~~ something error')
+            }
+
+        })
+    }
+</script>
 {% endblock%}

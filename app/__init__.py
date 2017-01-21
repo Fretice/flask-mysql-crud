@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import render_template, url_for, redirect, flash, request
-from flask.ext.bootstrap import Bootstrap
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask_bootstrap import Bootstrap
+from flask_sqlalchemy import SQLAlchemy
 from config import config
 
 bootstrap = Bootstrap()

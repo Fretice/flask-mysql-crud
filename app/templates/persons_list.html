@@ -8,10 +8,12 @@
 
 
 {% block page_content %}
-<table class="table">
+{# <button class="btn btn-success" onclick="{{ url_for('.add_person')}}">添加人员</button> #}
+<a href="{{ url_for('.add_person') }}" class="btn btn-success">添加人员</a>
+<br>
+<table class="table table-hover">
     <thread>
     <tr>
-    <td><i class="fa fa-warning"></i></td>
     <td>姓名</td>
     <td>性别</td>
     <td>年龄</td>
@@ -20,12 +22,12 @@
     <td>备注</td>
     <td>操作</td>
     </tr>
-    <thread>  
+    </thread>  
 {% include "table_list.html"%}
 </table>
 {% if persons.__len__() >0 %}
 {% if pagination %}
-<div class="pagination" style="padding-left:45%;">
+<div class="pagination" style="padding-left:35%;">
     {{ macros.pagination_widget(pagination, '.index') }}
 </div>
 {% endif %}
