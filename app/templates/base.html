@@ -63,9 +63,12 @@
         $('#myModal').find("#hidPId").val(id)
         
     }
+
+$SCRIPT_ROOT = {{ request.script_root|tojson|safe }}
+
     function DeletePerson(id){
 
-        url = $SCRIPT_ROOT = {{ request.script_root|tojson|safe }}+'/delete_person';
+        url = $SCRIPT_ROOT+'/delete_person';
         $.ajax({
             url:url,
             data:{ID:id},
@@ -84,5 +87,27 @@ alert('~~~~(>_<)~~~~ something error')
 
         })
     }
+
+
+    function Search(domId){
+url = $SCRIPT_ROOT+'/search_person';
+ $.ajax({
+            url:url,
+            data:{Keyword:$('#'+domId).val()},
+            dataType:'json',
+            type:'POST',
+            success:function(data){
+$('tbody').eq(1).html('')
+var html = '<tr> \
+            <td>'+data.name+'</td> \
+            <td>'+data.gender==1?'男':'女'+'</td> \
+            <td>'+data.age+'</td> \
+            <td>'+data.birthday+'</td> \
+            <td>'+data.location+'</td> \
+            <td>'+data.comment+'</td>'
+            $('tbody').html(html)
+    }
+})
+}
 </script>
 {% endblock%}

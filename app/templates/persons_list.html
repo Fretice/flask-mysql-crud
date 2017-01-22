@@ -9,7 +9,17 @@
 
 {% block page_content %}
 {# <button class="btn btn-success" onclick="{{ url_for('.add_person')}}">添加人员</button> #}
-<a href="{{ url_for('.add_person') }}" class="btn btn-success">添加人员</a>
+
+<form class="form-horizontal" role="form" action="{{ url_for('.search_person') }}">
+  <div class="form-group">
+    <div class="col-sm-10 col-md-8">
+      <input type="text" class="form-control" id="txtForKeyword" name='txtForKeyword' placeholder="用户名称">
+    </div>
+    <button type="submit" class="btn btn-warning" >搜索</button>
+  </div>
+  
+  <a href="{{ url_for('.add_person') }}" class="btn btn-success">添加人员</a>
+</form>
 <br>
 <table class="table table-hover">
     <thread>

@@ -66,3 +66,16 @@ def add_person():
         flash('添加人员成功')
         return redirect(url_for('.index'))
     return render_template('add_person.html', form=form)
+
+
+@main.route('/search_person', methods=['POST', 'GET'])
+def search_person():
+    keyword = request.args.get('txtForKeyword')
+    page = request.args.get('page', 1, type=int)
+    if keyword == "":
+        flash('请输入你要搜索的人员姓名')
+        pagination = Person.query.order_by(Person.modifiedDate.desc()).paginate(page, per_page=current_app.config['PER_PAGE'], error_out=False)
+    else:
+        pagination = Person.query.order_by(Person.modifiedDate.desc()).filter_by(name=keyword).paginate(page, per_page=current_app.config['PER_PAGE'], error_out=False)
+    persons = pagination.items
+    return render_template("persons_list.html", persons=persons, pagination=pagination)
